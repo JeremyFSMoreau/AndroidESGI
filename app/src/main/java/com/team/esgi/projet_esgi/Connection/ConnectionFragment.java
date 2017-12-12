@@ -44,6 +44,4 @@ public class ConnectionFragment extends Fragment {
 
         return view;
     }
-
-
 }
