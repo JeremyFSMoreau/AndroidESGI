@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.team.esgi.projet_esgi.MainActivity;
 import com.team.esgi.projet_esgi.R;
@@ -44,6 +43,4 @@ public class ConnectionFragment extends Fragment {
 
         return view;
     }
-
-
 }
