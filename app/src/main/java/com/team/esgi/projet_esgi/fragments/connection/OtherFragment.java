@@ -1,4 +1,4 @@
-package com.team.esgi.projet_esgi.Connection;
+package com.team.esgi.projet_esgi.fragments.connection;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

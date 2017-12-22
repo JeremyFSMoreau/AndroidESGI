@@ -1,4 +1,4 @@
-package com.team.esgi.projet_esgi.Connection;
+package com.team.esgi.projet_esgi.fragments.connection;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,9 +9,13 @@ import android.widget.Button;
 
 import com.team.esgi.projet_esgi.MainActivity;
 import com.team.esgi.projet_esgi.R;
+import com.team.esgi.projet_esgi.managers.EpisodesManager;
+import com.team.esgi.projet_esgi.models.Episode;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.realm.Realm;
+import io.realm.RealmResults;
 
 public class ConnectionFragment extends Fragment {
 
@@ -42,5 +46,30 @@ public class ConnectionFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Realm realm = Realm.getDefaultInstance(); // opens "myrealm.realm"
+        try {
+
+// In a DynamicRealm all objects are DynamicRealmObjects
+            /*realm.beginTransaction();
+            Episode person = realm.createObject(Episode.class);
+            person.setId(1);
+            person.setName("John");
+            realm.commitTransaction();*/
+
+// Queries still work normally
+            RealmResults<Episode> persons = realm.where(Episode.class)
+                    .equalTo("name", "John")
+                    .findAll();
+
+            System.out.println("persons.size() :" +persons.size());
+        } finally {
+            realm.close();
+        }
     }
 }

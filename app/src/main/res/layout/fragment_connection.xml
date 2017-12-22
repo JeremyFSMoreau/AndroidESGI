@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.team.esgi.projet_esgi.Connection.ConnectionFragment">
+    tools:context=".fragments.connection.ConnectionFragment">
 
     <LinearLayout
         android:orientation="vertical"
