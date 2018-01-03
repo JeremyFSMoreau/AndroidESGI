@@ -1,4 +1,4 @@
-package com.team.esgi.projet_esgi.models;
+package com.team.esgi.projet_esgi.models.User;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
@@ -17,6 +17,10 @@ public class User {
     @SerializedName("token")
     @Expose
     private String token;
+
+    @SerializedName("data")
+    @Expose
+    private UserData userData;
 
     public User(){
 
@@ -60,10 +64,19 @@ public class User {
         this.token = token;
     }
 
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
+    }
+
     @Override
     public String toString() {
         return "User{" +
                 "token='" + token + '\'' +
+
                 '}';
     }
 }

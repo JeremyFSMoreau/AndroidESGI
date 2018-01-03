@@ -5,10 +5,6 @@ import com.team.esgi.projet_esgi.models.Episode;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by yves on 21/12/2017.
- */
-
 public class EpisodesManager {
 
     //region Singleton

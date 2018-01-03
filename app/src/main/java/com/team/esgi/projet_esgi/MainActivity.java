@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.team.esgi.projet_esgi.fragments.connection.ConnectionFragment;
+import com.team.esgi.projet_esgi.fragments.user.ProfileFragment;
 import com.team.esgi.projet_esgi.models.Episode;
 
 import io.realm.Realm;
@@ -79,7 +80,7 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_camera) {
-            // Handle the camera action
+            pushFragment(ProfileFragment.newInstance());
         } else if (id == R.id.nav_gallery) {
             pushFragment(ConnectionFragment.newInstance());
         } else if (id == R.id.nav_slideshow) {
