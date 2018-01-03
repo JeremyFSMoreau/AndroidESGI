@@ -16,7 +16,7 @@ import com.team.esgi.projet_esgi.R;
 import com.team.esgi.projet_esgi.data.remote.APIService;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
-import com.team.esgi.projet_esgi.models.User;
+import com.team.esgi.projet_esgi.models.User.User;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,8 +82,7 @@ public class ConnectionFragment extends Fragment {
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()) {
                     user.setToken(response.body().getToken());
-                    Log.d("test",user.getToken());
-                    KeyValueDB.setUsername(mContext,user.getToken());
+                    KeyValueDB.setUser(mContext,user);
                     ((MainActivity)getActivity()).pushFragment(OtherFragment.newInstance());
                 }
                 else

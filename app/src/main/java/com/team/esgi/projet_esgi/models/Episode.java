@@ -3,10 +3,6 @@ package com.team.esgi.projet_esgi.models;
 import io.realm.RealmObject;
 import io.realm.annotations.RealmClass;
 
-/**
- * Created by yves on 21/12/2017.
- */
-
 @RealmClass
 public class Episode extends RealmObject {
 
