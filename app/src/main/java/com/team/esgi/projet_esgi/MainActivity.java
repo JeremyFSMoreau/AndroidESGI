@@ -13,11 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.team.esgi.projet_esgi.fragments.connection.ConnectionFragment;
+import com.team.esgi.projet_esgi.fragments.recherche.SearchFragment;
 import com.team.esgi.projet_esgi.fragments.user.ProfileFragment;
-import com.team.esgi.projet_esgi.models.Episode;
-
-import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,7 +81,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_gallery) {
             pushFragment(ConnectionFragment.newInstance());
         } else if (id == R.id.nav_slideshow) {
-
+            pushFragment(SearchFragment.newInstance());
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
