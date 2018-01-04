@@ -1,5 +1,6 @@
 package com.team.esgi.projet_esgi.data.remote;
 
+import com.team.esgi.projet_esgi.models.SearchResult;
 import com.team.esgi.projet_esgi.models.User.User;
 
 import retrofit2.Call;
@@ -7,6 +8,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 public interface APIService {
 
@@ -21,5 +23,8 @@ public interface APIService {
 
     @GET("/user")
     Call<User> show(@Header("Authorization") String authHeader);
+
+    @GET("/search/series?")
+    Call<SearchResult> list(@Query("name") String name, @Header("Authorization") String authHeader);
 
 }

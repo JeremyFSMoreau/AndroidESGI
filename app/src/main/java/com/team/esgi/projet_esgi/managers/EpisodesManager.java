@@ -1,6 +1,6 @@
 package com.team.esgi.projet_esgi.managers;
 
-import com.team.esgi.projet_esgi.models.Episode;
+import com.team.esgi.projet_esgi.models.Series.Episode;
 
 import java.util.ArrayList;
 import java.util.List;
