@@ -83,7 +83,27 @@ public class ConnectionFragment extends Fragment {
                 if(response.isSuccessful()) {
                     user.setToken(response.body().getToken());
                     KeyValueDB.setUser(mContext,user);
+                    sendGet(user);
                     ((MainActivity)getActivity()).pushFragment(OtherFragment.newInstance());
+                }
+                else
+                    Log.d("arf","c'est raté");
+            }
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API.");
+            }
+        });
+    }
+
+    public void sendGet(final User user) {
+        mAPIService.show("Bearer " + user.getToken()).enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if(response.isSuccessful()) {
+                    user.setUserData(response.body().getUserData());
+                    KeyValueDB.setUser(mContext,user);
+                    Log.d("test",user.getUserData().getLanguage());
                 }
                 else
                     Log.d("arf","c'est raté");

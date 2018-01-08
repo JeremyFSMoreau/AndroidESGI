@@ -13,7 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.team.esgi.projet_esgi.fragments.connection.ConnectionFragment;
-import com.team.esgi.projet_esgi.fragments.recherche.SearchFragment;
+import com.team.esgi.projet_esgi.fragments.series.SearchFragment;
 import com.team.esgi.projet_esgi.fragments.user.ProfileFragment;
 
 public class MainActivity extends AppCompatActivity
