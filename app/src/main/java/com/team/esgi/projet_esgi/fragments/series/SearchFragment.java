@@ -1,4 +1,4 @@
-package com.team.esgi.projet_esgi.fragments.recherche;
+package com.team.esgi.projet_esgi.fragments.series;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -7,13 +7,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
 import com.google.gson.Gson;
+import com.team.esgi.projet_esgi.MainActivity;
 import com.team.esgi.projet_esgi.R;
+import com.team.esgi.projet_esgi.adapters.SeriesAdapter;
 import com.team.esgi.projet_esgi.data.remote.APIService;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
@@ -22,7 +25,9 @@ import com.team.esgi.projet_esgi.models.Series.Serie;
 import com.team.esgi.projet_esgi.models.User.User;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,8 +39,8 @@ public class SearchFragment extends Fragment {
 
     private APIService mAPIService;
     private ListView listeSeries;
-    private ArrayAdapter mAdapter;
-    private List<String> initList;
+    private SeriesAdapter mAdapter;
+    private ArrayList<Serie> initList;
     Context mContext;
 
     public SearchFragment() {
@@ -67,8 +72,8 @@ public class SearchFragment extends Fragment {
         String json = KeyValueDB.getUser(mContext);
         final User user = gson.fromJson(json,User.class);
 
-        initList = new ArrayList<String>();
-        mAdapter = new ArrayAdapter(mContext,android.R.layout.simple_list_item_1,initList);
+        initList = new ArrayList<Serie>();
+        mAdapter = new SeriesAdapter(initList,mContext);
         listeSeries.setAdapter(mAdapter);
 
         validateButton.setOnClickListener(new View.OnClickListener() {
@@ -82,6 +87,14 @@ public class SearchFragment extends Fragment {
           }
         );
 
+        listeSeries.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Serie serie = (Serie) parent.getItemAtPosition(position);
+                KeyValueDB.setSerie(mContext,serie);
+                ((MainActivity)getActivity()).pushFragment(SerieFragment.newInstance());
+            }
+        });
 
         return view;
     }
@@ -111,7 +124,7 @@ public class SearchFragment extends Fragment {
     }
 
     public void fillListView(Serie serie){
-        mAdapter.add(serie.getSeriesName());
+        mAdapter.add(serie);
     }
 
 

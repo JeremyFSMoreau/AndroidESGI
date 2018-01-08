@@ -26,6 +26,7 @@ public class ProfileFragment extends Fragment {
 
     private APIService mAPIService;
     Context mContext;
+    User user;
 
     public ProfileFragment() {
 
@@ -51,8 +52,7 @@ public class ProfileFragment extends Fragment {
 
         Gson gson = new Gson();
         String json = KeyValueDB.getUser(mContext);
-        final User user = gson.fromJson(json,User.class);
-        sendGet(user);
+        user = gson.fromJson(json,User.class);
 
         Log.d(TAG,user.getUsername());
         Log.d(TAG,user.getUserkey());
@@ -68,24 +68,7 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    public void sendGet(final User user) {
-        mAPIService.show("Bearer " + user.getToken()).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if(response.isSuccessful()) {
-                    user.setUserData(response.body().getUserData());
-                    KeyValueDB.setUser(mContext,user);
-                    Log.d("test",user.getUserData().getLanguage());
-                }
-                else
-                    Log.d("arf","c'est raté");
-            }
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e(TAG, "Unable to submit post to API.");
-            }
-        });
-    }
+
 
 
 

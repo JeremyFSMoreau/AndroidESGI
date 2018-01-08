@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
+import com.team.esgi.projet_esgi.models.Series.Serie;
 import com.team.esgi.projet_esgi.models.User.User;
 
 public class KeyValueDB {
@@ -30,6 +31,10 @@ public class KeyValueDB {
         return getPrefs(context).getString("user_key", "default_user");
     }
 
+    public static String getSerie(Context context) {
+        return getPrefs(context).getString("serie_key", "default_serie");
+    }
+
     public static void setUsername(Context context, String input) {
         SharedPreferences.Editor editor = getPrefs(context).edit();
         editor.putString("username_key", input);
@@ -47,6 +52,14 @@ public class KeyValueDB {
         Gson gson = new Gson();
         String json = gson.toJson(user,User.class);
         editor.putString("user_key", json);
+        editor.apply();
+    }
+
+    public static void setSerie(Context context, Serie serie) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(serie,Serie.class);
+        editor.putString("serie_key", json);
         editor.apply();
     }
 }
