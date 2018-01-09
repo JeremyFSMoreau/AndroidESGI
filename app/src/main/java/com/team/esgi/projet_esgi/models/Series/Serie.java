@@ -1,5 +1,7 @@
 package com.team.esgi.projet_esgi.models.Series;
 
+import android.provider.ContactsContract;
+
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -33,6 +35,10 @@ public class Serie{
     @SerializedName("status")
     @Expose
     private String status;
+
+    @SerializedName("data")
+    @Expose
+    private DataSerie dataSerie;
 
     public Serie() {
     }
@@ -101,4 +107,11 @@ public class Serie{
         this.status = status;
     }
 
+    public DataSerie getDataSerie() {
+        return dataSerie;
+    }
+
+    public void setDataSerie(DataSerie dataSerie) {
+        this.dataSerie = dataSerie;
+    }
 }

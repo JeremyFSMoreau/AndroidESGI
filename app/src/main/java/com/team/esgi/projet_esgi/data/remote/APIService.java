@@ -1,6 +1,8 @@
 package com.team.esgi.projet_esgi.data.remote;
 
 import com.team.esgi.projet_esgi.models.SearchResult;
+import com.team.esgi.projet_esgi.models.Series.Episode;
+import com.team.esgi.projet_esgi.models.Series.EpisodesList;
 import com.team.esgi.projet_esgi.models.Series.Serie;
 import com.team.esgi.projet_esgi.models.User.User;
 
@@ -33,5 +35,8 @@ public interface APIService {
 
     @GET("/series/{id}")
     Call<Serie> serieDetails(@Path("id") String name, @Header("Authorization") String authHeader);
+
+    @GET("/series/{id}/episodes")
+    Call<EpisodesList> episodesList(@Path("id") String name, @Header("Authorization") String authHeader);
 
 }
