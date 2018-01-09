@@ -3,6 +3,7 @@ package com.team.esgi.projet_esgi.fragments.series;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +14,35 @@ import com.team.esgi.projet_esgi.R;
 import com.team.esgi.projet_esgi.data.remote.APIService;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
+import com.team.esgi.projet_esgi.models.SearchResult;
 import com.team.esgi.projet_esgi.models.Series.Serie;
 import com.team.esgi.projet_esgi.models.User.User;
 
 import java.security.Key;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import static android.content.ContentValues.TAG;
+
 public class SerieFragment extends Fragment {
 
     private APIService mAPIService;
-    private TextView messageConnexion;
+    private User user;
     Context mContext;
     Serie serie;
+    TextView statusSerie;
+    TextView firstAiredSerie;
+    TextView networkSerie;
+    TextView runtimeSerie;
+    TextView genreSerie;
+    TextView overviewSerie;
+    TextView avgSerie;
+    TextView countNotesSerie;
+    View view;
+
+    TextView nomSerie;
 
     public SerieFragment() {
 
@@ -38,16 +57,59 @@ public class SerieFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mContext=this.getActivity();
-        View view = inflater.inflate(R.layout.fragment_other, container, false);
-        messageConnexion = view.findViewById(R.id.message_connexion);
+        mAPIService = ApiUtils.getAPIService();
 
         Gson gson = new Gson();
-        String json = KeyValueDB.getSerie(mContext);
-        serie = gson.fromJson(json,Serie.class);
+        String json = KeyValueDB.getUser(mContext);
+        user = gson.fromJson(json,User.class);
+        String jsonTwo = KeyValueDB.getSerie(mContext);
+        serie = gson.fromJson(jsonTwo,Serie.class);
+        sendGet();
 
-        messageConnexion.setText(serie.getSeriesName());
+        view = inflater.inflate(R.layout.fragment_series_sheet, container, false);
+
 
         return view;
+    }
+
+    public void sendGet() {
+        mAPIService.serieDetails(serie.getId().toString(),"Bearer " + user.getToken()).enqueue(new Callback<Serie>() {
+            @Override
+            public void onResponse(Call<Serie> call, Response<Serie> response) {
+                if(response.isSuccessful()) {
+                    serie = response.body();
+                    fillDetails();
+                }
+                else
+                    Log.d("arf","c'est raté");
+            }
+            @Override
+            public void onFailure(Call<Serie> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API." + t.toString());
+            }
+        });
+    }
+
+    public void fillDetails()
+    {
+        nomSerie = view.findViewById(R.id.nomSerie);
+        statusSerie = view.findViewById(R.id.statusSerie);
+        firstAiredSerie = view.findViewById(R.id.firstAiredSerie);
+        networkSerie= view.findViewById(R.id.networkSerie);
+        runtimeSerie = view.findViewById(R.id.runtimeSerie);
+        genreSerie = view.findViewById(R.id.genreSerie);
+        overviewSerie = view.findViewById(R.id.overviewSerie);
+        avgSerie = view.findViewById(R.id.avgSerie);
+        countNotesSerie = view.findViewById(R.id.countNotesSerie);
+
+        nomSerie.setText(serie.getDataSerie().getSeriesName());
+        statusSerie.setText(serie.getDataSerie().getStatus());
+        firstAiredSerie.setText(serie.getDataSerie().getFirstAired());
+        networkSerie.setText(serie.getDataSerie().getNetwork());
+        runtimeSerie.setText(serie.getDataSerie().getRuntime());
+        overviewSerie.setText(serie.getDataSerie().getOverview());
+        //avgSerie.setText(String.format("%02d",serie.getDataSerie().getSiteRating()));
+        //countNotesSerie.setText(String.format("%02d",serie.getDataSerie().getSiteRatingCount()));
     }
 
 

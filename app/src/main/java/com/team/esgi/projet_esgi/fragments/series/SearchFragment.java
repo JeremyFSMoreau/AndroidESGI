@@ -100,7 +100,6 @@ public class SearchFragment extends Fragment {
     }
 
     public void sendGet(final User user,String searchValue) {
-
         mAPIService.list(searchValue,"Bearer " + user.getToken()).enqueue(new Callback<SearchResult>() {
             @Override
             public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {

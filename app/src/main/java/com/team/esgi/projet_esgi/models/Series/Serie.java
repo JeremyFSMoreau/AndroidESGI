@@ -34,17 +34,6 @@ public class Serie{
     @Expose
     private String status;
 
-    @SerializedName("data")
-    @Expose
-    private Episode episode;
-    @SerializedName("errors")
-    @Expose
-    private Errors errors;
-
-    @SerializedName("links")
-    @Expose
-    private Links links;
-
     public Serie() {
     }
 
@@ -110,30 +99,6 @@ public class Serie{
 
     public void setStatus(String status) {
         this.status = status;
-    }
-
-    public Episode getEpisode() {
-        return episode;
-    }
-
-    public void setEpisode(Episode episode) {
-        this.episode = episode;
-    }
-
-    public Errors getErrors() {
-        return errors;
-    }
-
-    public void setErrors(Errors errors) {
-        this.errors = errors;
-    }
-
-    public Links getLinks() {
-        return links;
-    }
-
-    public void setLinks(Links links) {
-        this.links = links;
     }
 
 }
