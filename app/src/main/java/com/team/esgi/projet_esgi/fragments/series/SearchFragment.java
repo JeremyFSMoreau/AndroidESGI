@@ -8,27 +8,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.google.gson.Gson;
 import com.team.esgi.projet_esgi.MainActivity;
 import com.team.esgi.projet_esgi.R;
 import com.team.esgi.projet_esgi.adapters.SeriesAdapter;
-import com.team.esgi.projet_esgi.data.remote.APIService;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
+import com.team.esgi.projet_esgi.data.remote.ShowServices.ShowServices;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
 import com.team.esgi.projet_esgi.models.SearchResult;
 import com.team.esgi.projet_esgi.models.Series.Serie;
 import com.team.esgi.projet_esgi.models.User.User;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,11 +36,15 @@ import static android.content.ContentValues.TAG;
 
 public class SearchFragment extends Fragment {
 
-    private APIService mAPIService;
+    private ShowServices mAPIService;
     private ListView listeSeries;
     private SeriesAdapter mAdapter;
     private ArrayList<Serie> initList;
     Context mContext;
+    @BindView(R.id.validateButton)
+    public Button validateButton;
+    @BindView(R.id.loader)
+    public RelativeLayout loader;
 
     public SearchFragment() {
 
@@ -58,15 +61,16 @@ public class SearchFragment extends Fragment {
         mContext=this.getActivity();
 
 
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        Button validateButton = view.findViewById(R.id.validateButton);
+        ButterKnife.bind(this, view);
+
+        validateButton = view.findViewById(R.id.validateButton);
 
 
         final EditText mSearchBar = view.findViewById(R.id.searchBar);
-        mAPIService = ApiUtils.getAPIService();
+        mAPIService = ApiUtils.getShowService();
         listeSeries = view.findViewById(R.id.list_series);
         Gson gson = new Gson();
         String json = KeyValueDB.getUser(mContext);
@@ -100,9 +104,12 @@ public class SearchFragment extends Fragment {
     }
 
     public void sendGet(final User user,String searchValue) {
+        showLoader();
+
         mAPIService.list(searchValue,"Bearer " + user.getToken()).enqueue(new Callback<SearchResult>() {
             @Override
             public void onResponse(Call<SearchResult> call, Response<SearchResult> response) {
+                hideLoader();
                 if(response.isSuccessful()) {
                     for(Serie serie : response.body().getData()){
                         fillListView(serie);
@@ -120,6 +127,17 @@ public class SearchFragment extends Fragment {
                 Log.d(TAG,t.toString());
             }
         });
+    }
+
+    private void showLoader() {
+        validateButton.setClickable(true);
+        loader.setVisibility(View.VISIBLE);
+
+    }
+
+    private void  hideLoader() {
+        validateButton.setClickable(false);
+        loader.setVisibility(View.GONE);
     }
 
     public void fillListView(Serie serie){

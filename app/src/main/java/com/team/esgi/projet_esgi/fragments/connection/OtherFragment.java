@@ -10,14 +10,14 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.team.esgi.projet_esgi.R;
-import com.team.esgi.projet_esgi.data.remote.APIService;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
+import com.team.esgi.projet_esgi.data.remote.UserServices.UserServices;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
 import com.team.esgi.projet_esgi.models.User.User;
 
 public class OtherFragment extends Fragment {
 
-    private APIService mAPIService;
+    private UserServices mAPIService;
     private TextView messageConnexion;
     Context mContext;
 
@@ -43,7 +43,7 @@ public class OtherFragment extends Fragment {
         User user = gson.fromJson(json,User.class);
 
         messageConnexion.setText(user.getToken());
-        mAPIService = ApiUtils.getAPIService();
+        mAPIService = ApiUtils.getUserService();
 
         return view;
     }

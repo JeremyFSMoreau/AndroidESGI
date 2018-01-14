@@ -9,4 +9,24 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="search">Recherche</string>
+    <string name="deconnexion">Deconnexion</string>
+    <string name="profil">Profil</string>
+    <string name="favoris">Favoris</string>
+    <string name="connexion">Connexion</string>
+    <string name="nom">Nom :</string>
+    <string name="textview">TextView</string>
+    <string name="identifier">Identifier :</string>
+    <string name="langue">Langue :</string>
+    <string name="affichage">Affichage :</string>
+    <string name="rechercher">Rechercher</string>
+    <string name="chargement_en_cours">chargement en cours</string>
+    <string name="status">Status</string>
+    <string name="premiere_diffusion">premiere diffusion</string>
+    <string name="r_seau">Réseau</string>
+    <string name="duree">Durée</string>
+    <string name="genre">Genre(s)</string>
+    <string name="synopsis">Synopsis</string>
+    <string name="moyenne">Moyenne :</string>
+    <string name="nombres_de_notes">Nombres de notes :</string>
 </resources>
