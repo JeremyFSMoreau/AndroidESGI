@@ -13,18 +13,18 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.team.esgi.projet_esgi.R;
-import com.team.esgi.projet_esgi.data.remote.APIService;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
+import com.team.esgi.projet_esgi.data.remote.ShowServices.ShowServices;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
-import com.team.esgi.projet_esgi.models.SearchResult;
 import com.team.esgi.projet_esgi.models.Series.Episode;
 import com.team.esgi.projet_esgi.models.Series.EpisodesList;
 import com.team.esgi.projet_esgi.models.Series.Serie;
 import com.team.esgi.projet_esgi.models.User.User;
 
-import java.security.Key;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -33,24 +33,22 @@ import static android.content.ContentValues.TAG;
 
 public class SerieFragment extends Fragment {
 
-    private APIService mAPIService;
+    private ShowServices mAPIService;
     private User user;
     ListView episodesListe;
     ArrayList<String> initList;
     ArrayAdapter<String> mAdapter;
     Context mContext;
     Serie serie;
-    TextView statusSerie;
-    TextView firstAiredSerie;
-    TextView networkSerie;
-    TextView runtimeSerie;
-    TextView genreSerie;
-    TextView overviewSerie;
-    TextView avgSerie;
-    TextView countNotesSerie;
-    View view;
-
-    TextView nomSerie;
+    @BindView(R.id.statusSerie) TextView statusSerie;
+    @BindView(R.id.firstAiredSerie) TextView firstAiredSerie;
+    @BindView(R.id.networkSerie) TextView networkSerie;
+    @BindView(R.id.runtimeSerie) TextView runtimeSerie;
+    @BindView(R.id.genreSerie) TextView genreSerie;
+    @BindView(R.id.overviewSerie) TextView overviewSerie;
+    @BindView(R.id.avgSerie) TextView avgSerie;
+    @BindView(R.id.countNotesSerie) TextView countNotesSerie;
+    @BindView(R.id.nomSerie) TextView nomSerie;
 
     public SerieFragment() {
 
@@ -65,8 +63,9 @@ public class SerieFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mContext=this.getActivity();
-        mAPIService = ApiUtils.getAPIService();
-        view = inflater.inflate(R.layout.fragment_series_sheet, container, false);
+        mAPIService = ApiUtils.getShowService();
+        View view = inflater.inflate(R.layout.fragment_series_sheet, container, false);
+        ButterKnife.bind(this, view);
 
         Gson gson = new Gson();
         String json = KeyValueDB.getUser(mContext);
@@ -132,16 +131,6 @@ public class SerieFragment extends Fragment {
 
     public void fillDetails()
     {
-        nomSerie = view.findViewById(R.id.nomSerie);
-        statusSerie = view.findViewById(R.id.statusSerie);
-        firstAiredSerie = view.findViewById(R.id.firstAiredSerie);
-        networkSerie= view.findViewById(R.id.networkSerie);
-        runtimeSerie = view.findViewById(R.id.runtimeSerie);
-        genreSerie = view.findViewById(R.id.genreSerie);
-        overviewSerie = view.findViewById(R.id.overviewSerie);
-        avgSerie = view.findViewById(R.id.avgSerie);
-        countNotesSerie = view.findViewById(R.id.countNotesSerie);
-
         nomSerie.setText(serie.getDataSerie().getSeriesName());
         statusSerie.setText(serie.getDataSerie().getStatus());
         firstAiredSerie.setText(serie.getDataSerie().getFirstAired());

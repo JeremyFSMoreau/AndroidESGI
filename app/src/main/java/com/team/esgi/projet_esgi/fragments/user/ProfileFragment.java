@@ -11,20 +11,16 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.team.esgi.projet_esgi.R;
-import com.team.esgi.projet_esgi.data.remote.APIService;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
+import com.team.esgi.projet_esgi.data.remote.UserServices.UserServices;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
 import com.team.esgi.projet_esgi.models.User.User;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import static android.content.ContentValues.TAG;
 
 public class ProfileFragment extends Fragment {
 
-    private APIService mAPIService;
+    private UserServices mAPIService;
     Context mContext;
     User user;
 
@@ -43,7 +39,7 @@ public class ProfileFragment extends Fragment {
         mContext=this.getActivity();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
-        mAPIService = ApiUtils.getAPIService();
+        mAPIService = ApiUtils.getUserService();
 
         TextView mUsername = view.findViewById(R.id.username);
         TextView mIdentifier = view.findViewById(R.id.identifier);
@@ -56,13 +52,17 @@ public class ProfileFragment extends Fragment {
 
         Log.d(TAG,user.getUsername());
         Log.d(TAG,user.getUserkey());
-        Log.d(TAG,user.getUserData().getLanguage());
-        Log.d(TAG,user.getUserData().getFavoritesDisplaymode());
+        if(user.getUserData() != null){
+            Log.d(TAG,user.getUserData().getLanguage());
+            Log.d(TAG,user.getUserData().getFavoritesDisplaymode());
+        }
 
         mUsername.setText(user.getUsername());
         mIdentifier.setText(user.getUserkey());
-        mLanguage.setText(user.getUserData().getLanguage());
-        mDisplay.setText(user.getUserData().getFavoritesDisplaymode());
+        if(user.getUserData() != null){
+            mLanguage.setText(user.getUserData().getLanguage());
+            mDisplay.setText(user.getUserData().getFavoritesDisplaymode());
+        }
 
 
         return view;

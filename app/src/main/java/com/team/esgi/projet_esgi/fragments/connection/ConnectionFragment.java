@@ -13,8 +13,9 @@ import android.widget.TextView;
 
 import com.team.esgi.projet_esgi.MainActivity;
 import com.team.esgi.projet_esgi.R;
-import com.team.esgi.projet_esgi.data.remote.APIService;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
+import com.team.esgi.projet_esgi.data.remote.UserServices.UserServices;
+import com.team.esgi.projet_esgi.managers.UserManager;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
 import com.team.esgi.projet_esgi.models.User.User;
 
@@ -28,7 +29,7 @@ import static android.content.ContentValues.TAG;
 
 public class ConnectionFragment extends Fragment {
 
-    private APIService mAPIService;
+    private UserServices userService;
     private SharedPreferences sharedPreferences;
     private static String PREF_NAME = "prefs";
     Context mContext;
@@ -56,13 +57,21 @@ public class ConnectionFragment extends Fragment {
         final TextView login = view.findViewById(R.id.login);
         final TextView identifier = view.findViewById(R.id.accountIdentifier);
 
-        mAPIService = ApiUtils.getAPIService();
+        userService = ApiUtils.getUserService();
         connectionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
                 String username = login.getText().toString();
                 String userkey = identifier.getText().toString();
                 String apikey = "E73267E0132B869C";
+
+//                Faire un truc dans le genre pour simplifier les appels aux méthodes sur le user (connexion, deco, récupérer son état)
+
+//                UserManager connexion = UserManager.getInstance();
+//                connexion.connexion(apikey, userkey, username);
+
                 sendPost(apikey, userkey, username);
             }
         });
@@ -77,7 +86,7 @@ public class ConnectionFragment extends Fragment {
 
     public void sendPost(String apikey, String userkey, String username) {
         final User user = new User(apikey,userkey,username);
-        mAPIService.login(user).enqueue(new Callback<User>() {
+        userService.login(user).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()) {
@@ -97,7 +106,7 @@ public class ConnectionFragment extends Fragment {
     }
 
     public void sendGet(final User user) {
-        mAPIService.show("Bearer " + user.getToken()).enqueue(new Callback<User>() {
+        userService.show("Bearer " + user.getToken()).enqueue(new Callback<User>() {
             @Override
             public void onResponse(Call<User> call, Response<User> response) {
                 if(response.isSuccessful()) {
@@ -114,4 +123,8 @@ public class ConnectionFragment extends Fragment {
             }
         });
     }
+
+
+
+
 }
