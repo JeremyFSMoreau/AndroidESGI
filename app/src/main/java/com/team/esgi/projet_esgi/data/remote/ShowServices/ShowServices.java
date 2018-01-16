@@ -1,7 +1,8 @@
 package com.team.esgi.projet_esgi.data.remote.ShowServices;
 
 import com.team.esgi.projet_esgi.models.SearchResult;
-import com.team.esgi.projet_esgi.models.Series.EpisodesList;
+import com.team.esgi.projet_esgi.models.Actors.ActorsList;
+import com.team.esgi.projet_esgi.models.Episodes.EpisodesList;
 import com.team.esgi.projet_esgi.models.Series.Serie;
 
 import retrofit2.Call;
@@ -20,5 +21,8 @@ public interface ShowServices {
 
     @GET("/series/{id}/episodes")
     Call<EpisodesList> episodesList(@Path("id") String name, @Header("Authorization") String authHeader);
+
+    @GET("/series/{id}/actors")
+    Call<ActorsList> actorsList(@Path("id") String name, @Header("Authorization") String authHeader);
 
 }

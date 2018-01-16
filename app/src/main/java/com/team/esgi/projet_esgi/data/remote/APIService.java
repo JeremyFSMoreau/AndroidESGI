@@ -1,15 +1,12 @@
 package com.team.esgi.projet_esgi.data.remote;
 
 import com.team.esgi.projet_esgi.models.SearchResult;
-import com.team.esgi.projet_esgi.models.Series.Episode;
-import com.team.esgi.projet_esgi.models.Series.EpisodesList;
+import com.team.esgi.projet_esgi.models.Episodes.EpisodesList;
 import com.team.esgi.projet_esgi.models.Series.Serie;
 import com.team.esgi.projet_esgi.models.User.User;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
@@ -38,5 +35,8 @@ public interface APIService {
 
     @GET("/series/{id}/episodes")
     Call<EpisodesList> episodesList(@Path("id") String name, @Header("Authorization") String authHeader);
+
+    @GET("/series/{id}/actors")
+    Call<Serie> actorsList(@Path("id") String name, @Header("Authorization") String authHeader);
 
 }

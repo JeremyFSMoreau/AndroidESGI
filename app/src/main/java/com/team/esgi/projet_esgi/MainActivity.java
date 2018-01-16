@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.team.esgi.projet_esgi.fragments.connection.ConnectionFragment;
+import com.team.esgi.projet_esgi.fragments.connection.DisconnectionFragment;
 import com.team.esgi.projet_esgi.fragments.series.SearchFragment;
 import com.team.esgi.projet_esgi.fragments.user.ProfileFragment;
 
@@ -84,7 +85,10 @@ public class MainActivity extends AppCompatActivity
             pushFragment(SearchFragment.newInstance());
         } else if (id == R.id.nav_manage) {
 
+        } else if (id == R.id.deconnexion) {
+            pushFragment(DisconnectionFragment.newInstance());
         }
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

@@ -15,7 +15,7 @@ public class KeyValueDB {
         // Blank
     }
 
-    private static SharedPreferences getPrefs(Context context) {
+    public static SharedPreferences getPrefs(Context context) {
         return context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
     }
 

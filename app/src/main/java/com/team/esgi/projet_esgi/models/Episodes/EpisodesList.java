@@ -1,8 +1,10 @@
-package com.team.esgi.projet_esgi.models.Series;
+package com.team.esgi.projet_esgi.models.Episodes;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.team.esgi.projet_esgi.models.Series.Errors;
+import com.team.esgi.projet_esgi.models.Series.Links;
 
 public class EpisodesList {
 
