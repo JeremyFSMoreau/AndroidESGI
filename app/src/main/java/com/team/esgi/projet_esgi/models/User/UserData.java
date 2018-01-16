@@ -13,6 +13,11 @@ public class UserData {
     @SerializedName("favoritesDisplaymode")
     @Expose
     private String favoritesDisplaymode;
+    @SerializedName("data")
+    @Expose
+    private Favorite favorite;
+
+
 
     public String getUserName() {
         return userName;
@@ -36,6 +41,14 @@ public class UserData {
 
     public void setFavoritesDisplaymode(String favoritesDisplaymode) {
         this.favoritesDisplaymode = favoritesDisplaymode;
+    }
+
+    public Favorite getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(Favorite favorite) {
+        this.favorite = favorite;
     }
 
     @Override

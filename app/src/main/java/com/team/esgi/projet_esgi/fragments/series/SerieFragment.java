@@ -16,8 +16,10 @@ import com.team.esgi.projet_esgi.R;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
 import com.team.esgi.projet_esgi.data.remote.ShowServices.ShowServices;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
-import com.team.esgi.projet_esgi.models.Series.Episode;
-import com.team.esgi.projet_esgi.models.Series.EpisodesList;
+import com.team.esgi.projet_esgi.models.Actors.Actor;
+import com.team.esgi.projet_esgi.models.Actors.ActorsList;
+import com.team.esgi.projet_esgi.models.Episodes.Episode;
+import com.team.esgi.projet_esgi.models.Episodes.EpisodesList;
 import com.team.esgi.projet_esgi.models.Series.Serie;
 import com.team.esgi.projet_esgi.models.User.User;
 
@@ -36,8 +38,11 @@ public class SerieFragment extends Fragment {
     private ShowServices mAPIService;
     private User user;
     ListView episodesListe;
-    ArrayList<String> initList;
-    ArrayAdapter<String> mAdapter;
+    ListView actorsListe;
+    ArrayList<String> initListEpisodes;
+    ArrayList<String> initListActors;
+    ArrayAdapter<String> mAdapterEpisodes;
+    ArrayAdapter<String> mAdapterActors;
     Context mContext;
     Serie serie;
     @BindView(R.id.statusSerie) TextView statusSerie;
@@ -74,10 +79,14 @@ public class SerieFragment extends Fragment {
         serie = gson.fromJson(jsonTwo,Serie.class);
 
         episodesListe = view.findViewById(R.id.episodesList);
+        actorsListe = view.findViewById(R.id.actorsList);
 
-        initList = new ArrayList<String>();
-        mAdapter = new ArrayAdapter<String>(mContext,android.R.layout.simple_list_item_1,initList);
-        episodesListe.setAdapter(mAdapter);
+        initListEpisodes = new ArrayList<String>();
+        initListActors = new ArrayList<String>();
+        mAdapterEpisodes = new ArrayAdapter<String>(mContext,android.R.layout.simple_list_item_1,initListEpisodes);
+        mAdapterActors = new ArrayAdapter<String>(mContext,android.R.layout.simple_list_item_1,initListActors);
+        episodesListe.setAdapter(mAdapterEpisodes);
+        actorsListe.setAdapter(mAdapterActors);
         sendGet();
 
 
@@ -93,6 +102,7 @@ public class SerieFragment extends Fragment {
                 if(response.isSuccessful()) {
                     serie.setDataSerie(response.body().getDataSerie());
                     fillEpisodes();
+                    fillActors();
                     fillDetails();
                 }
                 else
@@ -129,6 +139,30 @@ public class SerieFragment extends Fragment {
         });
     }
 
+    public void fillActors()
+    {
+        mAPIService.actorsList(serie.getId().toString(),"Bearer " + user.getToken()).enqueue(new Callback<ActorsList>() {
+            @Override
+            public void onResponse(Call<ActorsList> call, Response<ActorsList> response) {
+                if(response.isSuccessful()) {
+                    ActorsList actorsList = new ActorsList();
+                    actorsList = response.body();
+                    for(Actor actor : response.body().getActor())
+                    {
+                        fillActorsListView(actor);
+                        Log.d("test", "aaaa" + actor.getName());
+                    }
+                }
+                else
+                    Log.d("arf","c'est raté");
+            }
+            @Override
+            public void onFailure(Call<ActorsList> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API." + t.toString());
+            }
+        });
+    }
+
     public void fillDetails()
     {
         nomSerie.setText(serie.getDataSerie().getSeriesName());
@@ -143,7 +177,12 @@ public class SerieFragment extends Fragment {
 
     public void fillEpisodesListView(Episode episode)
     {
-        mAdapter.add("S" + episode.getAiredSeason() + "E" + episode.getAiredEpisodeNumber() + " " + episode.getEpisodeName());
+        mAdapterEpisodes.add("S" + episode.getAiredSeason() + "E" + episode.getAiredEpisodeNumber() + " " + episode.getEpisodeName());
+    }
+
+    public void fillActorsListView(Actor actor)
+    {
+        mAdapterActors.add(actor.getName() + " \n AS \n " + actor.getRole());
     }
 
 

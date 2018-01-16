@@ -1,4 +1,4 @@
-package com.team.esgi.projet_esgi.models.Series;
+package com.team.esgi.projet_esgi.models.Episodes;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

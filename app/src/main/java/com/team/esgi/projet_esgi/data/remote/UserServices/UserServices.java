@@ -1,6 +1,7 @@
 package com.team.esgi.projet_esgi.data.remote.UserServices;
 
 import com.team.esgi.projet_esgi.models.User.User;
+import com.team.esgi.projet_esgi.models.User.UserData;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -15,5 +16,8 @@ public interface UserServices {
 
     @GET("/user")
     Call<User> show(@Header("Authorization") String authHeader);
+
+    @GET("/user/favorites")
+    Call<UserData> favoritesList(@Header("Authorization") String authHeader);
 
 }
