@@ -69,10 +69,8 @@ public class ConnectionFragment extends Fragment {
 
 //                Faire un truc dans le genre pour simplifier les appels aux méthodes sur le user (connexion, deco, récupérer son état)
 
-//                UserManager connexion = UserManager.getInstance();
-//                connexion.connexion(apikey, userkey, username);
+                UserManager.getInstance().connexion(getContext(),apikey, userkey, username);
 
-                sendPost(apikey, userkey, username);
             }
         });
 
@@ -84,45 +82,7 @@ public class ConnectionFragment extends Fragment {
         super.onResume();
     }
 
-    public void sendPost(String apikey, String userkey, String username) {
-        final User user = new User(apikey,userkey,username);
-        userService.login(user).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if(response.isSuccessful()) {
-                    user.setToken(response.body().getToken());
-                    KeyValueDB.setUser(mContext,user);
-                    sendGet(user);
-                    ((MainActivity)getActivity()).pushFragment(OtherFragment.newInstance());
-                }
-                else
-                    Log.d("arf","c'est raté");
-            }
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e(TAG, "Unable to submit post to API.");
-            }
-        });
-    }
 
-    public void sendGet(final User user) {
-        userService.show("Bearer " + user.getToken()).enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                if(response.isSuccessful()) {
-                    user.setUserData(response.body().getUserData());
-                    KeyValueDB.setUser(mContext,user);
-                    Log.d("test",user.getUserData().getLanguage());
-                }
-                else
-                    Log.d("arf","c'est raté");
-            }
-            @Override
-            public void onFailure(Call<User> call, Throwable t) {
-                Log.e(TAG, "Unable to submit post to API.");
-            }
-        });
-    }
 
 
 
