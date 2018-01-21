@@ -111,6 +111,7 @@ public class SerieFragment extends Fragment {
             @Override
             public void onFailure(Call<Serie> call, Throwable t) {
                 Log.e(TAG, "Unable to submit post to API." + t.toString());
+
             }
         });
     }

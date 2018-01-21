@@ -3,12 +3,16 @@ package com.team.esgi.projet_esgi.managers;
 import android.content.Context;
 import android.util.Log;
 
+import com.google.gson.Gson;
 import com.team.esgi.projet_esgi.MainActivity;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
 import com.team.esgi.projet_esgi.data.remote.UserServices.UserServices;
+import com.team.esgi.projet_esgi.fragments.connection.ConnectionFragment;
 import com.team.esgi.projet_esgi.fragments.connection.OtherFragment;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
+import com.team.esgi.projet_esgi.models.User.Favorite;
 import com.team.esgi.projet_esgi.models.User.User;
+import com.team.esgi.projet_esgi.models.User.UserData;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,11 +66,15 @@ public class UserManager {
                     ((MainActivity)context).pushFragment(OtherFragment.newInstance());
                 }
                 else
+                {
                     Log.d("arf","c'est raté");
+                    ((MainActivity)context).pushFragment(ConnectionFragment.newInstance());
+                }
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e(TAG, "Unable to submit post to API.");
+                ((MainActivity)context).pushFragment(ConnectionFragment.newInstance());
             }
         });
     }
@@ -78,14 +86,43 @@ public class UserManager {
                 if(response.isSuccessful()) {
                     user.setUserData(response.body().getUserData());
                     KeyValueDB.setUser(context,user);
+                    getUserFavorites(context,user);
                     Log.d("test",user.getUserData().getLanguage());
                 }
                 else
+                {
                     Log.d("arf","c'est raté");
+                    ((MainActivity)context).pushFragment(ConnectionFragment.newInstance());
+                }
             }
             @Override
             public void onFailure(Call<User> call, Throwable t) {
                 Log.e(TAG, "Unable to submit post to API.");
+                ((MainActivity)context).pushFragment(ConnectionFragment.newInstance());
+            }
+        });
+    }
+
+    public void getUserFavorites(final Context context, final User user){
+        userService.favoritesList("Bearer " + user.getToken()).enqueue(new Callback<UserData>() {
+            @Override
+            public void onResponse(Call<UserData> call, Response<UserData> response) {
+                if(response.isSuccessful()) {
+                    Log.d("AAh",response.body().getFavorite().getFavorites().toString());
+                    user.getUserData().setFavorite(response.body().getFavorite());
+                    KeyValueDB.setUser(context,user);
+                }
+                else
+                {
+                    Log.d("arf","c'est raté");
+                    ((MainActivity)context).pushFragment(ConnectionFragment.newInstance());
+                }
+
+            }
+            @Override
+            public void onFailure(Call<UserData> call, Throwable t) {
+                Log.e(TAG, "Unable to submit post to API." + t.toString());
+                ((MainActivity)context).pushFragment(ConnectionFragment.newInstance());
             }
         });
     }
@@ -94,8 +131,7 @@ public class UserManager {
 
     }
 
-    private static void isConnected(){
-
+    public static void isConnected(final Context context, User user){
     }
 
 

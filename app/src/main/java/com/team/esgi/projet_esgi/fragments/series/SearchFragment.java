@@ -19,8 +19,9 @@ import com.team.esgi.projet_esgi.R;
 import com.team.esgi.projet_esgi.adapters.SeriesAdapter;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
 import com.team.esgi.projet_esgi.data.remote.ShowServices.ShowServices;
+import com.team.esgi.projet_esgi.fragments.connection.ConnectionFragment;
 import com.team.esgi.projet_esgi.models.KeyValueDB;
-import com.team.esgi.projet_esgi.models.SearchResult;
+import com.team.esgi.projet_esgi.models.Series.SearchResult;
 import com.team.esgi.projet_esgi.models.Series.Serie;
 import com.team.esgi.projet_esgi.models.User.User;
 
@@ -73,9 +74,17 @@ public class SearchFragment extends Fragment {
         mAPIService = ApiUtils.getShowService();
         listeSeries = view.findViewById(R.id.list_series);
         Gson gson = new Gson();
-        String json = KeyValueDB.getUser(mContext);
-        final User user = gson.fromJson(json,User.class);
+        String json = "";
+        User user = new User();
+        try {
+            json = KeyValueDB.getUser(mContext);
+            user = gson.fromJson(json, User.class);
+        }
+        catch (Exception e){
+            ((MainActivity)mContext).pushFragment(ConnectionFragment.newInstance());
+        }
 
+        final User connectedUser = user;
         initList = new ArrayList<Serie>();
         mAdapter = new SeriesAdapter(initList,mContext);
         listeSeries.setAdapter(mAdapter);
@@ -86,7 +95,7 @@ public class SearchFragment extends Fragment {
                   String searchValue = mSearchBar.getText().toString();
                   mAdapter.clear();
                   Log.d("TAG",searchValue);
-                  sendGet(user, searchValue);
+                  sendGet(connectedUser, searchValue);
               }
           }
         );
@@ -119,12 +128,16 @@ public class SearchFragment extends Fragment {
                     }
                 }
                 else
+                {
                     Log.d("arf","c'est raté");
+                    ((MainActivity)mContext).pushFragment(ConnectionFragment.newInstance());
+                }
             }
             @Override
             public void onFailure(Call<SearchResult> call, Throwable t) {
                 Log.e(TAG, "Unable to submit post to API.");
                 Log.d(TAG,t.toString());
+                ((MainActivity)mContext).pushFragment(ConnectionFragment.newInstance());
             }
         });
     }

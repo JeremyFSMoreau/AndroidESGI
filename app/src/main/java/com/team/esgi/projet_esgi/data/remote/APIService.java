@@ -1,6 +1,6 @@
 package com.team.esgi.projet_esgi.data.remote;
 
-import com.team.esgi.projet_esgi.models.SearchResult;
+import com.team.esgi.projet_esgi.models.Series.SearchResult;
 import com.team.esgi.projet_esgi.models.Episodes.EpisodesList;
 import com.team.esgi.projet_esgi.models.Series.Serie;
 import com.team.esgi.projet_esgi.models.User.User;

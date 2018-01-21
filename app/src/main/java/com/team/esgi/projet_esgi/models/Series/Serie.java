@@ -114,4 +114,19 @@ public class Serie{
     public void setDataSerie(DataSerie dataSerie) {
         this.dataSerie = dataSerie;
     }
+
+    @Override
+    public String toString() {
+        return "Serie{" +
+                "aliases=" + aliases +
+                ", banner='" + banner + '\'' +
+                ", firstAired='" + firstAired + '\'' +
+                ", id=" + id +
+                ", network='" + network + '\'' +
+                ", overview='" + overview + '\'' +
+                ", seriesName='" + seriesName + '\'' +
+                ", status='" + status + '\'' +
+                ", dataSerie=" + dataSerie +
+                '}';
+    }
 }
