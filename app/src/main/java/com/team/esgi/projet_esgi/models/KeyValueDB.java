@@ -5,6 +5,8 @@ import android.content.SharedPreferences;
 
 import com.google.gson.Gson;
 import com.team.esgi.projet_esgi.models.Series.Serie;
+import com.team.esgi.projet_esgi.models.User.Note;
+import com.team.esgi.projet_esgi.models.User.NoteList;
 import com.team.esgi.projet_esgi.models.User.User;
 
 public class KeyValueDB {
@@ -35,6 +37,14 @@ public class KeyValueDB {
         return getPrefs(context).getString("serie_key", "default_serie");
     }
 
+    public static String getActor(Context context) {
+        return getPrefs(context).getString("actor_key", "default_actor");
+    }
+
+    public static String getUserNotes(Context context) {
+        return getPrefs(context).getString("user_notes_key", "default_user_notes");
+    }
+
     public static void setUsername(Context context, String input) {
         SharedPreferences.Editor editor = getPrefs(context).edit();
         editor.putString("username_key", input);
@@ -60,6 +70,20 @@ public class KeyValueDB {
         Gson gson = new Gson();
         String json = gson.toJson(serie,Serie.class);
         editor.putString("serie_key", json);
+        editor.apply();
+    }
+
+    public static void setNotes(Context context, NoteList noteList) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(noteList,NoteList.class);
+        editor.putString("user_notes_key", json);
+        editor.apply();
+    }
+
+    public static void setActor(Context context, String actor) {
+        SharedPreferences.Editor editor = getPrefs(context).edit();
+        editor.putString("actor_key", actor);
         editor.apply();
     }
 }

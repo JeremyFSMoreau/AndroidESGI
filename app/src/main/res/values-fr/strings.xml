@@ -32,4 +32,7 @@
     <string name="main_menu">Menu principal</string>
     <string name="last_updated">Dernières séries récemment mises à jour</string>
     <string name="affichage">Affichage :</string>
+    <string name="add_favorite">Ajouter favori</string>
+    <string name="remove_favorite">Retirer favori</string>
+    <string name="share">Partager</string>
 </resources>

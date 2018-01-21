@@ -18,7 +18,6 @@ public class UserData {
     private Favorite favorite;
 
 
-
     public String getUserName() {
         return userName;
     }

@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.team.esgi.projet_esgi.MainActivity;
 import com.team.esgi.projet_esgi.R;
 import com.team.esgi.projet_esgi.data.remote.ApiUtils;
@@ -51,7 +52,15 @@ public class ConnectionFragment extends Fragment {
         mContext = this.getActivity();
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_connection, container, false);
-
+        try{
+            Gson gson = new Gson();
+            String json = KeyValueDB.getUser(mContext);
+            User user = gson.fromJson(json,User.class);
+            UserManager.getInstance().refreshToken(mContext, user);
+        }
+        catch (Exception e){
+            Log.d("erreur",e.toString());
+        }
         ButterKnife.bind(this, view);
 
         final TextView login = view.findViewById(R.id.login);
@@ -66,8 +75,6 @@ public class ConnectionFragment extends Fragment {
                 String username = login.getText().toString();
                 String userkey = identifier.getText().toString();
                 String apikey = "E73267E0132B869C";
-
-//                Faire un truc dans le genre pour simplifier les appels aux méthodes sur le user (connexion, deco, récupérer son état)
 
                 UserManager.getInstance().connexion(getContext(),apikey, userkey, username);
 
