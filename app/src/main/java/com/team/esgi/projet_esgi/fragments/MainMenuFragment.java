@@ -104,8 +104,7 @@ public class MainMenuFragment extends Fragment {
                     Log.d("ah",response.body().getSerieLastUpdated().toString());
                     Integer limitLoop = 0;
                     for(SerieLastUpdated serie : response.body().getSerieLastUpdated()){
-                        if(limitLoop <10){
-                            Log.d("aie", serie.getId().toString());
+                        if(limitLoop <20){
                             getSerieById(serie.getId().toString(),user);
                             limitLoop++;
                         }
@@ -127,7 +126,6 @@ public class MainMenuFragment extends Fragment {
     }
 
     public void getSerieById(String idSerie, final User user){
-        Log.d("OUI",idSerie);
         mAPIService.serieDetails(idSerie,"Bearer " + user.getToken()).enqueue(new Callback<Serie>() {
             @Override
             public void onResponse(Call<Serie> call, Response<Serie> response) {

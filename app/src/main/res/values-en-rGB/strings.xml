@@ -25,4 +25,7 @@
     <string name="to_connect">Connect</string>
     <string name="my_favorites">My favorites</string>
     <string name="affichage">"Display : "</string>
+    <string name="add_favorite">Add favorite</string>
+    <string name="remove_favorite">Remove favorite</string>
+    <string name="share">Share</string>
 </resources>
