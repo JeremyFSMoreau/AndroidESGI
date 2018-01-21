@@ -48,7 +48,7 @@
             android:id="@+id/button_connect"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Se connecter"
+            android:text="@string/to_connect"
             tools:layout_editor_absoluteX="131dp"
             tools:layout_editor_absoluteY="209dp" />
 

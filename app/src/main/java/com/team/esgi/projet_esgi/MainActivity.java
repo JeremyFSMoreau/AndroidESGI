@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.team.esgi.projet_esgi.fragments.MainMenuFragment;
 import com.team.esgi.projet_esgi.fragments.connection.ConnectionFragment;
 import com.team.esgi.projet_esgi.fragments.connection.DisconnectionFragment;
 import com.team.esgi.projet_esgi.fragments.series.SearchFragment;
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        pushFragment(MainMenuFragment.newInstance());
     }
 
     @Override
@@ -48,6 +51,8 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,6 +92,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.deconnexion) {
             pushFragment(DisconnectionFragment.newInstance());
+        } else if (id == R.id.nav_main_menu){
+            pushFragment(MainMenuFragment.newInstance());
         }
 
 
@@ -101,5 +108,4 @@ public class MainActivity extends AppCompatActivity
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
-
 }

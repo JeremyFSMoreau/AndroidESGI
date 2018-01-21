@@ -75,8 +75,11 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "token='" + token + '\'' +
-
+                "apikey='" + apikey + '\'' +
+                ", userkey='" + userkey + '\'' +
+                ", username='" + username + '\'' +
+                ", token='" + token + '\'' +
+                ", userData=" + userData +
                 '}';
     }
 }

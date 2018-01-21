@@ -1,6 +1,7 @@
 package com.team.esgi.projet_esgi.data.remote.ShowServices;
 
-import com.team.esgi.projet_esgi.models.SearchResult;
+import com.team.esgi.projet_esgi.models.Series.LastUpdated;
+import com.team.esgi.projet_esgi.models.Series.SearchResult;
 import com.team.esgi.projet_esgi.models.Actors.ActorsList;
 import com.team.esgi.projet_esgi.models.Episodes.EpisodesList;
 import com.team.esgi.projet_esgi.models.Series.Serie;
@@ -24,5 +25,8 @@ public interface ShowServices {
 
     @GET("/series/{id}/actors")
     Call<ActorsList> actorsList(@Path("id") String name, @Header("Authorization") String authHeader);
+
+    @GET("/updated/query")
+    Call<LastUpdated> updatedSeries(@Query("fromTime") String fromTime, @Header("Authorization") String authHeader);
 
 }
